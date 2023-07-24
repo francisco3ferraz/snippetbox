@@ -10,6 +10,9 @@ To run this project run
 
 ```bash
   go mod tidy
+  cd tls
+  go run /usr/local/go/src/crypto/tls/generate_cert.go --rsa-bits=2048 --host=localhost
+  cd ..
   go run ./cmd/web
 ```
 
