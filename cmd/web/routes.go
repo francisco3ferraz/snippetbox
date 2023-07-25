@@ -3,9 +3,19 @@ package main
 import (
 	"net/http"
 
+	"github.com/franciscofferraz/snippetbox/ui"
 	"github.com/julienschmidt/httprouter"
 	"github.com/justinas/alice"
 )
+
+func contains[T comparable](v T, s []T) bool {
+	for i := range s {
+		if v == s[i] {
+			return true
+		}
+	}
+	return false
+}
 
 func (app *application) routes() http.Handler {
 	router := httprouter.New()
@@ -13,8 +23,8 @@ func (app *application) routes() http.Handler {
 		app.notFound(w)
 	})
 
-	fileServer := http.FileServer(http.Dir("./ui/static/"))
-	router.Handler(http.MethodGet, "/static/*filepath", http.StripPrefix("/static", fileServer))
+	fileServer := http.FileServer(http.FS(ui.Files))
+	router.Handler(http.MethodGet, "/static/*filepath", fileServer)
 
 	dynamic := alice.New(app.sessionManager.LoadAndSave, noSurf, app.authenticate)
 	router.Handler(http.MethodGet, "/", dynamic.ThenFunc(app.home))
