@@ -8,15 +8,6 @@ import (
 	"github.com/justinas/alice"
 )
 
-func contains[T comparable](v T, s []T) bool {
-	for i := range s {
-		if v == s[i] {
-			return true
-		}
-	}
-	return false
-}
-
 func (app *application) routes() http.Handler {
 	router := httprouter.New()
 	router.NotFound = http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -25,6 +16,8 @@ func (app *application) routes() http.Handler {
 
 	fileServer := http.FileServer(http.FS(ui.Files))
 	router.Handler(http.MethodGet, "/static/*filepath", fileServer)
+
+	router.HandlerFunc(http.MethodGet, "/ping", ping)
 
 	dynamic := alice.New(app.sessionManager.LoadAndSave, noSurf, app.authenticate)
 	router.Handler(http.MethodGet, "/", dynamic.ThenFunc(app.home))

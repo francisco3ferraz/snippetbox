@@ -30,6 +30,6 @@ To run this project run
 - Security improvements
 - User authentication
 - Using request context
-- Optional Go features
+- Embedded files and Genetics
 - Testing
 
