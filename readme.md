@@ -2,7 +2,7 @@
 # SnippetBox
 
 The source code developed while following the book
-[Let's Go, 2nd Edition by Alex Edwards](https://www.github.com/octokatherine)
+[Let's Go, 2nd Edition by Alex Edwards](https://lets-go.alexedwards.net/)
 
 ## Deployment
 
